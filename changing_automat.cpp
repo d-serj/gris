@@ -1,3 +1,4 @@
+//#include <windows.h>
 #include "stdafx.h"
 char *rus (char *p)
 {
