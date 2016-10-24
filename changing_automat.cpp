@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            printf (rus ("Ваша сдача: \n"));   
+            printf (rus ("Ваша  сдача: \n"));   
                 
 			change = cash - cost;
 
