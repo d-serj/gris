@@ -1,5 +1,5 @@
 #include <stdio.h>
-//12
+//1
 int main(int argc, char **argv)
 
 {
@@ -25,46 +25,46 @@ int main(int argc, char **argv)
             continue;
         }
         else
-        {
-            printf ("Your change: \n");   
+        	{
+            	printf ("Your change: \n");   
                 
 			change = cash - cost;
 
-            while (change > 0)
-            {
-				if (change >= fifty)
+           	 while (change > 0)
+            		{
+			if (change >= fifty)
 				{
 					change = change - fifty;
 					printf ("50\n", fifty);
 				}
-                else if (change >= twentyf)
-                {
+                	else if (change >= twentyf)
+                		{
 					change = change - twentyf;
 					printf ("25\n", twentyf);
-                }
-                else if (change >= ten)
-                {
+                		}
+                	else if (change >= ten)
+                		{
 					change = change - ten;
 					printf ("10\n", ten);
-                }
-                else if (change >= five)
-                {
+                		}
+			else if (change >= five)
+                		{
 					change = change - five;
 					printf ("5\n", five);
-                }
-                else if (change >= two)
-                {
+                		}
+                	else if (change >= two)
+                		{
 					change = change - two;
 					printf ("2\n", two);   
-                }
-                else if (change >= one)
-                {
+                		}
+                	else if (change >= one)
+                		{
 					change = change - one;
 					printf ("1\n", one);     
-                }
-            }
-			printf ("\n");
-        }        
-    }    
+                		}
+            		}
+		printf ("\n");
+		}
+	}
 	return 0;
 }
