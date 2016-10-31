@@ -10,20 +10,22 @@ char *rus (char *p)
     return txt;
 }
 
-int pasha_p (int year);
-int pasha_k (int year);
+void pasha_p (int year);
+void pasha_k (int year);
 
 int main()
 {
-    int year, c;
+    int year;
+    char str[1024];
 
     printf (rus ("Программа определения даты Пасхи v1.0\n\n"));
     printf (rus ("Пожалуйста, вводите год c 1582 по 9999\n\n"));
 
-    for (;;) // Бесконечный цикл
+    for (;;)
     {
         printf (rus ("Пожалуйста, введите год: "));
-        scanf ("%d", &year);
+        gets (str);
+        year = atoi (str);
 
         if (year < 1582 || year > 9999)
         {
@@ -36,12 +38,11 @@ int main()
     }
     return 0;
 }
-// Православная Пасха
-int pasha_p (int year)
-{
-    int p, a, b, c, d, e;
 
-    a = b = c = d = e = 0;
+// Православная Пасха
+void pasha_p (int year)
+{
+    int a, b, c, d, e, tmp;
 
     a = year % 19;
     b = year % 4;
@@ -49,21 +50,21 @@ int pasha_p (int year)
     d = (19 * a + 15) % 30;
     e = (2 * b + 4 * c + 6 * d + 6) % 7;
 
-    if (((d + e - 9) + 13) > 30)
+    tmp = d + e - 9;
+    if (tmp + 13 > 30)
     {
-        return printf (rus ("Православная Пасха %d мая\n"), p = ((d + e - 9) + 13) - 30);
+        printf (rus ("Православная Пасха %d мая\n"), tmp + 13 - 30);
     }
     else
     {
-        return printf (rus ("Православная Пасха %d апреля\n"), p = (d + e - 9) + 13);
+        printf (rus ("Православная Пасха %d апреля\n"), tmp + 13);
     }
 }
-// Католическая пасха
-int pasha_k (int year)
-{
-    int a, b, c, d, e, m, n, k, p, q;
 
-    a = b = c = d = e = k = p = q = m = n = 0;
+// Католическая пасха
+void pasha_k (int year)
+{
+    int a, b, c, d, e, m, n, k, p, q, tmp;
 
     a = year % 19;
     b = year % 4;
@@ -75,23 +76,25 @@ int pasha_k (int year)
     n = (4 + k - q) % 7;
     d = (19 * a + m) % 30;
     e = (2 * b + 4 * c + 6 * d + n) % 7;
+    tmp = 22 + d + e;
 
+    // Если d = 29 и e = 6, то вместо 26 апреля будет 19 апреля
     if (d == 29 && e == 6)
     {
-        return printf (rus ("Католическая Пасха 19 апреля\n\n"));
+        printf (rus ("Католическая Пасха 19 апреля\n\n"));
     }
 
+    // Если d = 28, e = 6 и (11M + 11) mod 30 < 19, то вместо 25 апреля будет 18 апреля
     else if (d == 28 && e == 6 && ((11 * m + 11) % 30) < 19)
     {
-        return printf (rus ("Католическая Пасха 18 апреля\n\n"));
+        printf (rus ("Католическая Пасха 18 апреля\n\n"));
     }
-
-    else if ((22 + d + e) > 0 && (22 + d + e) < 32)
+    else if (tmp > 0 && tmp < 32)
     {
-        return printf (rus ("Католическая Пасха %d марта\n\n"), 22 + d + e);
+        printf (rus ("Католическая Пасха %d марта\n\n"), tmp);
     }
     else
     {
-        return printf (rus ("Католическая Пасха %d апреля\n\n"), d + e - 9);
+        printf (rus ("Католическая Пасха %d апреля\n\n"), d + e - 9);
     }
 }
