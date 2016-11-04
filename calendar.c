@@ -14,15 +14,44 @@ void print_calendar ();
 
 int main()
 {
+    int i, j;
+    int month[2][3] = {
+        {1, 2, 3},
+        {4, 5, 6}};
+
+    for (i = 0; i < 2; ++i)
+    {
+        for (j = 0; j < 3; ++j)
+        {
+          printf ("%2d", month[i][j]);
+        }
+        printf("\n");
+    }
+
     printf (rus (" Пн Вт Ср Чт Пт Сб Вс\n\n"));
 
     print_calendar();
 
+/*    for (;;)
+    {
+        scanf("%d", &i);
+        if (!(i % 4))
+        {
+            printf ("Delitsya\n");
+        }
+        else
+        {
+            printf ("Ne delitsya\n");
+        }
+    }
+*/
     return 0;
 }
 
+// Выводим на экран месяц с 31 числом
 void print_calendar()
 {
+    int j = 0;
     int i = 1;
     int stroke;
     int calendar[31];
@@ -57,6 +86,7 @@ void print_calendar()
         ++i;
     }
     printf ("\n");
+
     while (i >= 27 && i <= 30)
     {
         printf ("%3d", calendar[i]);
