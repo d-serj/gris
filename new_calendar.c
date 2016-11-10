@@ -33,10 +33,19 @@ int main()
     {
         printf (rus ("Введите год: "));
         scanf ("%d", &year);
-        if (year == 0)
-            break;
+        if (year < 1582 || year > 9999)
+        {
+            printf("Error!\n");
+            continue;
+        }
+
         printf (rus ("Введите месяц: "));
         scanf ("%d", &month);
+        if (month < 1 || month > 12)
+        {
+            printf("Error!\n");
+            continue;
+        }
         printf (rus ("Введите день: "));
         scanf ("%d", &day);
         printf (rus (name[calendar_func(day, month, year)]));
