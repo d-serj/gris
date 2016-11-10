@@ -10,64 +10,37 @@ char *rus (char *p)
     return txt;
 }
 
-int calendar_func (int day, int month, int year);
-
-int main()
-{
-    int i, n, day, month, year;
-
-    day = 1;
-
-    for (;;)
-    {
-        printf (rus ("Введите год: "));
-        scanf ("%d", &year);
-        printf (rus ("Введите месяц: "));
-        scanf ("%d", &month);
-        printf (rus (" Пн Вт Ср Чт Пт Сб Вс\n\n"));
-
-        n = calendar_func(day, month, year);
-        for (i = 0; i < n + 1; ++i)
-        {
-            printf ("   ");
-        }
-
-        for (i = 1; i <= 31; ++i)
-        {
-            printf ("  %d", i);
-            if ((i + n) % 7 == 0)
-            {
-                printf ("\n");
-            }
-        }
-
-        printf ("\n");
-
-
-        /*  for (;;)
-            {
-                scanf("%d", &i);
-                if (!(i % 4))
-                {
-                    printf ("Delitsya\n");
-                }
-                else
-                {
-                    printf ("Ne delitsya\n");
-                }
-            }
-        */
-    }
-    return 0;
-}
-
-// Функция определения в какой день начинается месяц
 int calendar_func (int d, int m, int y)
 {
+    int w;
+
     if (m <= 2)
     {
         --y;
         d += 3;
     }
-    return (d + y + y / 4 + y / 400 + (31 * m + 10) / 12) % 7;
+    w = (d + y + y / 4 - y / 100 + y / 400 + (31 * m + 10) / 12) % 7;
+    return w;
+}
+
+char *name[] = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
+
+int main()
+{
+    int day, month, year;
+
+    for (;;)
+    {
+        printf (rus ("Введите год: "));
+        scanf ("%d", &year);
+        if (year == 0)
+            break;
+        printf (rus ("Введите месяц: "));
+        scanf ("%d", &month);
+        printf (rus ("Введите день: "));
+        scanf ("%d", &day);
+        printf (rus (name[calendar_func(day, month, year)]));
+        printf ("\n");
+    }
+    return 0;
 }
