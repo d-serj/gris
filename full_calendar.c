@@ -4,7 +4,7 @@
 
 char *rus (char *p)
 {
-    static char txt[1024];
+    static char txt[2048];
 
     CharToOemA (p, txt);
     return txt;
@@ -25,29 +25,41 @@ int main()
 {
     int  i, y, j, month, year, horizontal, vertical;
 
-    month      = 1;
-    horizontal = 1;
-    vertical   = 1;
+    system ("mode 70, 40");
 
-    printf (rus ("Введите год: "));
-    scanf ("%d", &year);
-
-    if (year < 1582 || year > 9999)
+    for (;;)
     {
-        printf("Error!\n");
-        return 0;
-    }
+        printf (rus ("Введите год: "));
+        scanf ("%d", &year);
 
-    for (i = 1; i <= 4; ++i)
-    {
-        for (y = 1; y <= 3; ++y)
+        if (year < 1582 || year > 9999)
         {
-            print_calendar (month, year, horizontal, vertical);
-            month += 1;
-            horizontal += 23;
+            system ("cls");
+            continue;
         }
+
         horizontal = 1;
-        vertical  += 9;
+        vertical   = 1;
+        month      = 1;
+
+        // Выводим на экран календарь с 3 месяцами в строке и 4 стобцами
+        for (i = 1; i <= 4; ++i)
+        {
+            // Выводим 3 месяца в строку
+            for (y = 1; y <= 3; ++y)
+            {
+                print_calendar (month, year, horizontal, vertical);
+                month += 1;
+                horizontal += 23;
+            }
+            // Переходим на новую строку печати 3 месяцев
+            horizontal = 1;
+            vertical  += 9;
+        }
+        month = 1;
+        gotoxy(1, 38);
+        system ("pause");
+        system ("cls");
     }
     return 0;
 }
