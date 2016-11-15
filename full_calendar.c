@@ -19,6 +19,8 @@ void gotoxy (int x, int y)
 
 void print_calendar (int month, int year, int horizontal, int vertical);
 
+char *name[] = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+
 int main()
 {
     int  i, y, j, month, year, horizontal, vertical;
@@ -45,7 +47,7 @@ int main()
             horizontal += 23;
         }
         horizontal = 1;
-        vertical  += 8;
+        vertical  += 9;
     }
     return 0;
 }
@@ -70,6 +72,10 @@ void print_calendar (int month, int year, int horizontal, int vertical)
     }
     w = (day + year + year / 4 - year / 100 + year / 400 + (31 * month + 10) / 12) % 7;
 
+    gotoxy (horizontal, vertical);
+    vertical += 1;
+    printf ("       ");
+    printf (rus (name[month - 1]));
     gotoxy (horizontal, vertical);
     vertical += 1;
     printf (rus (" Пн Вт Ср Чт Пт Сб Вс\n"));
