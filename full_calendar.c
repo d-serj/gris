@@ -40,7 +40,7 @@ int main()
     {
         for (y = 1; y <= 3; ++y)
         {
-            print_calendar(month, year, horizontal, vertical);
+            print_calendar (month, year, horizontal, vertical);
             month += 1;
             horizontal += 23;
         }
@@ -70,10 +70,10 @@ void print_calendar (int month, int year, int horizontal, int vertical)
     }
     w = (day + year + year / 4 - year / 100 + year / 400 + (31 * month + 10) / 12) % 7;
 
-    gotoxy(horizontal, vertical);
+    gotoxy (horizontal, vertical);
     vertical += 1;
     printf (rus (" Пн Вт Ср Чт Пт Сб Вс\n"));
-    gotoxy(horizontal, vertical);
+    gotoxy (horizontal, vertical);
 
     // Печатаем количество пробелов в зависимости от дня начала месяца
     for (i = 1; i <= w; ++i)
@@ -85,6 +85,6 @@ void print_calendar (int month, int year, int horizontal, int vertical)
     {
         printf ("%3d", i);
         if ((i + w) % 7 == 0)
-            gotoxy(horizontal, ++vertical);
+            gotoxy (horizontal, ++vertical);
     }
 }
