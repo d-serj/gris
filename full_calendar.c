@@ -2,9 +2,12 @@
 #include <stdlib.h>
 #include <windows.h>
 
+#define RED 4
+#define WHITE 7
+
 char *rus (char *p)
 {
-    static char txt[2048];
+    static char txt[1024];
 
     CharToOemA (p, txt);
     return txt;
@@ -17,13 +20,19 @@ void gotoxy (int x, int y)
     SetConsoleCursorPosition(hConsole, position);
 }
 
+void setcolor (int i)
+{
+    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(handle, i);
+}
+
 void print_calendar (int month, int year, int horizontal, int vertical);
 
 char *name[] = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
 
 int main()
 {
-    int  i, y, j, month, year, horizontal, vertical;
+    int  i, y, month, year, horizontal, vertical;
 
     system ("mode 70, 40");
 
@@ -39,24 +48,24 @@ int main()
         }
 
         horizontal = 1;
-        vertical   = 1;
+        vertical   = 2;
         month      = 1;
 
-        // Выводим на экран календарь с 3 месяцами в строке и 4 стобцами
+        // Выводим на экран календарь с 3 месяцами в строке и 4 столбцами
         for (i = 1; i <= 4; ++i)
         {
             // Выводим 3 месяца в строку
             for (y = 1; y <= 3; ++y)
             {
                 print_calendar (month, year, horizontal, vertical);
-                month += 1;
+                ++month;
                 horizontal += 23;
             }
+
             // Переходим на новую строку печати 3 месяцев
             horizontal = 1;
             vertical  += 9;
         }
-        month = 1;
         gotoxy(1, 38);
         system ("pause");
         system ("cls");
@@ -66,7 +75,7 @@ int main()
 
 void print_calendar (int month, int year, int horizontal, int vertical)
 {
-    int  i, y, w, t, temp, day;
+    int  i, y, w, t, tempDay, temp1, day;
     int  days_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     day = 1;
@@ -82,6 +91,7 @@ void print_calendar (int month, int year, int horizontal, int vertical)
         --year;
         day += 3;
     }
+    // В какой день начинается месяц
     w = (day + year + year / 4 - year / 100 + year / 400 + (31 * month + 10) / 12) % 7;
 
     gotoxy (horizontal, vertical);
@@ -101,8 +111,28 @@ void print_calendar (int month, int year, int horizontal, int vertical)
     t = days_month[month - 1];
     for (i = 1; i <= t; ++i)
     {
-        printf ("%3d", i);
+        temp1 = i;
+        if (month <= 2)
+        {
+            temp1 += 3;
+            tempDay = (temp1 + year + year / 4 - year / 100 + year / 400 + (31 * month + 10) / 12) % 7;
+        }
+        else
+            tempDay = (temp1 + year + year / 4 - year / 100 + year / 400 + (31 * month + 10) / 12) % 7;
+
+        if ((month == 1 && i == 1) || (tempDay == 5 || tempDay == 6))
+        {
+            setcolor(RED);
+            printf ("%3d", i);
+        }
+
+        else
+        {
+            setcolor(WHITE);
+            printf ("%3d", i);
+        }
         if ((i + w) % 7 == 0)
             gotoxy (horizontal, ++vertical);
     }
+    setcolor(WHITE);
 }
