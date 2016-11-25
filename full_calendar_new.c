@@ -30,7 +30,7 @@ void setcolor (int i)
 
 void print_calendar (int month, int year, int horizontal, int vertical);
 //int celebrate (int year, int month, int day);
-void pasha_p (int year, int couter);
+void pasha_p (int year, int flag);
 
 char *name[] = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
 int  *days_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -50,13 +50,13 @@ int *celebrateDays[12][31] = {  {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                             };
 int main()
 {
-    int  i, y, month, year, horizontal, vertical, counter;
+    int  i, y, month, year, horizontal, vertical, flag;
 
     system ("mode 70, 40");
 
     for (;;)
     {
-        counter = 0;  // Счетчик начала цикла
+        flag = 0;  // Флаг начала цикла
 
         printf (rus ("Введите год: "));
         scanf ("%d", &year);
@@ -70,7 +70,7 @@ int main()
         vertical   = 2;
         month      = 1;
 
-        pasha_p(year, counter);
+        pasha_p(year, flag);
 
         // Выводим на экран календарь с 3 месяцами в строке и 4 столбцами
         for (i = 1; i <= 4; ++i)
@@ -88,8 +88,8 @@ int main()
             vertical  += 9;
         }
 
-        counter = 1;            // Счетчик конца цикла
-        pasha_p(year, counter); // Сбрасываем дату Пасхи и Троицы
+        flag = 1;            // Флаг конца цикла
+        pasha_p(year, flag); // Сбрасываем дату Пасхи и Троицы
 
         gotoxy(1, 38);
         system ("pause");
@@ -176,7 +176,7 @@ void print_calendar (int month, int year, int horizontal, int vertical)
     setcolor(WHITE);
 }
 
-void pasha_p (int year, int counter)
+void pasha_p (int year, int flag)
 {
     int a, b, c, d, e, temp1, temp2, temp3, tempMonth;
 
@@ -214,13 +214,13 @@ void pasha_p (int year, int counter)
     }
 
     // Сбрасываем даты Пасхи и Троицы
-    if (counter == 1 && temp1 + 13 > 29)
+    if (flag == 1 && temp1 + 13 > 29)
     {
         celebrateDays[4][temp1 + 13 - 30] = 0;
         celebrateDays[5][temp3 - 1] = 0;
     }
 
-    else if (counter == 1 && temp1 + 13 <= 29)
+    else if (flag == 1 && temp1 + 13 <= 29)
     {
         celebrateDays[3][temp1 + 13] = 0;
         celebrateDays[tempMonth][temp3 - 1] = 0;
