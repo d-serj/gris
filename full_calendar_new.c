@@ -34,6 +34,7 @@ void pasha_p (int year, int flag);
 
 char *name[] = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
 int  *days_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+int isDayCelebrate;
                                //1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
 int *celebrateDays[12][31] = {  {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Январь
                                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, // Февраль
@@ -50,7 +51,8 @@ int *celebrateDays[12][31] = {  {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                             };
 int main()
 {
-    int  i, y, month, year, horizontal, vertical, flag;
+    int  i, y, c, month, year, horizontal, vertical, flag;
+    char str[1024];
 
     system ("mode 70, 40");
 
@@ -59,10 +61,12 @@ int main()
         flag = 0;  // Флаг начала цикла
 
         printf (rus ("Введите год: "));
-        scanf ("%d", &year);
-
+        year = gets(str);
+        year = atoi(str);
         if (year < 1582 || year > 9999)
         {
+            printf(rus ("Введите год от 1583 до 9999\n"));
+            system("pause");
             system ("cls");
             continue;
         }
@@ -91,6 +95,7 @@ int main()
         flag = 1;            // Флаг конца цикла
         pasha_p(year, flag); // Сбрасываем дату Пасхи и Троицы
 
+        year = EOF;
         gotoxy(1, 38);
         system ("pause");
         system ("cls");
@@ -189,7 +194,13 @@ void pasha_p (int year, int flag)
     temp1 = (d + e - 9) - 1;
     if (temp1 + 13 > 29)
     {
-        celebrateDays[4][temp1 + 13 - 30] = 1;
+        if (flag == 0 && celebrateDays[4][temp1 + 13 - 30] == 1)
+            isDayCelebrate = 1;
+        else if (flag == 0 && celebrateDays[4][temp1 + 13 - 30] == 0)
+        {
+            isDayCelebrate = 0;
+            celebrateDays[4][temp1 + 13 - 30] = 1;
+        }
         temp3 = temp1 + 13 - 30 + 50;
         temp2 = days_month[4];
         temp3 = temp3 - temp2;
@@ -197,11 +208,17 @@ void pasha_p (int year, int flag)
     }
     else
     {
-        celebrateDays[3][temp1 + 13] = 1;
+        if (flag == 0 && celebrateDays[3][temp1 + 13] == 1)
+            isDayCelebrate = 1;
+        else if (flag == 0 && celebrateDays[3][temp1 + 13] == 0)
+        {
+            isDayCelebrate = 0;
+            celebrateDays[3][temp1 + 13] = 1;
+        }
         temp3 = temp1 + 13 + 50;
         temp2 = days_month[3];
         temp3 = temp3 - temp2;
-        if (temp3 - temp2 > 31)
+        if (temp3 - temp2 > 31) // Если дней больше 31 то переходим на следующий месяц
         {
             tempMonth = 5;
             celebrateDays[tempMonth][temp3 - 1] = 1;
@@ -216,13 +233,19 @@ void pasha_p (int year, int flag)
     // Сбрасываем даты Пасхи и Троицы
     if (flag == 1 && temp1 + 13 > 29)
     {
-        celebrateDays[4][temp1 + 13 - 30] = 0;
+        if (isDayCelebrate == 1);
+        else
+            celebrateDays[4][temp1 + 13 - 30] = 0;
+
         celebrateDays[5][temp3 - 1] = 0;
     }
 
     else if (flag == 1 && temp1 + 13 <= 29)
     {
-        celebrateDays[3][temp1 + 13] = 0;
+        if (isDayCelebrate == 1);
+        else
+            celebrateDays[3][temp1 + 13] = 0;
+
         celebrateDays[tempMonth][temp3 - 1] = 0;
     }
 }
