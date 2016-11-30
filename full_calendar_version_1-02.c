@@ -29,7 +29,6 @@ void setcolor (int i)
 }
 
 void print_calendar (int month, int year, int horizontal, int vertical);
-//int celebrate (int year, int month, int day);
 void pasha_p (int year, int flag);
 
 char *name[] = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
