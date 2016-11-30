@@ -73,7 +73,7 @@ int main()
         vertical   = 2;
         month      = 1;
 
-        pasha_p(year, flag);
+        pasha_p (year, flag);
 
         // Выводим на экран календарь с 3 месяцами в строке и 4 столбцами
         for (i = 1; i <= 4; ++i)
@@ -91,7 +91,7 @@ int main()
             vertical  += 9;
         }
 
-        gotoxy(1, 38);
+        gotoxy (1, 38);
 
         printf(rus("* 1 января   - Новый год\n"));
         printf(rus(" * 7 января   - Рождество Христово\n"));
@@ -110,8 +110,8 @@ int main()
 
         flag = 1;            // Флаг конца цикла
         pasha_p(year, flag); // Передаем функции флаг конца цикла и сбрасываем дату Пасхи и Троицы
-        
-        gotoxy(1, 48);
+
+        gotoxy (1, 48);
         system ("pause");
         system ("cls");
     }
@@ -139,6 +139,7 @@ void print_calendar (int month, int year, int horizontal, int vertical)
     // В какой день начинается месяц
     w = (day + year + year / 4 - year / 100 + year / 400 + (31 * month + 10) / 12) % 7;
 
+    // Печатаем "шапку" над каждым месяцем
     gotoxy (horizontal, vertical);
     vertical += 1;
     printf ("       ");
