@@ -269,10 +269,7 @@ void pasha_p (int year, int flag)
     else if (flag == 1 && temp1 + 13 <= 29) // Апрель
     {
         gotoxy(45, 38);
-        if (temp1 + 13 + 1 > 9)
-            printf(rus("* %d апреля - Пасха\n"), temp1 + 13 + 1);
-        else
-            printf(rus("* %d апреля - Пасха\n"), temp1 + 13 + 1);
+        printf(rus("* %d апреля - Пасха\n"), temp1 + 13 + 1);
         gotoxy(45, 39);
         if (temp3 > 9)
         {
