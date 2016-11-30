@@ -180,7 +180,7 @@ void print_calendar (int month, int year, int horizontal, int vertical)
             printf ("%3d", i);
         }
 
-        // Если день праздничный, то выделяем его красным
+        // Если день праздничный, то выделяем его красным иначе белым
         else if (celebrateDays[month - 1][i - 1] == 1)
         {
             setcolor(RED);
