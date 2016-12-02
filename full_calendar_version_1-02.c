@@ -33,7 +33,8 @@ void pasha_p (int year, int flag);
 
 char *name[] = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
 int  *days_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-int isDayCelebrate;
+int isDayCelebrate; // Праздничный ли день
+
                                //1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
 int *celebrateDays[12][31] = {  {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Январь
                                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Февраль
@@ -50,7 +51,7 @@ int *celebrateDays[12][31] = {  {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                             };
 int main()
 {
-    int  i, y, c, month, year, horizontal, vertical, flag;
+    int  i, y, month, year, horizontal, vertical, flag;
     char str[1024];
 
     system ("mode 70, 50");
@@ -93,14 +94,14 @@ int main()
 
         gotoxy (1, 38);
 
-        printf(rus("* 1 января   - Новый год\n"));
-        printf(rus(" * 7 января   - Рождество Христово\n"));
+        printf(rus("*  1 января  - Новый год\n"));
+        printf(rus(" *  7 января  - Рождество Христово\n"));
         if (year >= 1975)
-            printf(rus(" * 8 марта    - Международный женский день\n"));
+            printf(rus(" *  8 марта   - Международный женский день\n"));
         if (year >= 1890)
-            printf(rus(" * 1 мая      - День трудящихся\n"));
+            printf(rus(" *  1 мая     - День трудящихся\n"));
         if (year > 1944)
-            printf(rus(" * 9 мая      - День Победы\n"));
+            printf(rus(" *  9 мая     - День Победы\n"));
         if (year > 1990)
         {
             printf(rus(" * 28 июня    - День Конституции Украины\n"));
@@ -121,7 +122,6 @@ int main()
 void print_calendar (int month, int year, int horizontal, int vertical)
 {
     int  i, y, w, t, tempDay, temp1, day;
-
 
     day = 1;
 
@@ -272,6 +272,8 @@ void pasha_p (int year, int flag)
         gotoxy(45, 38);
         printf(rus("* %d апреля - Пасха\n"), temp1 + 13 + 1);
         gotoxy(45, 39);
+
+        // Печатаем дату Троицы с разными количествами пробелов для выравнивания
         if (temp3 > 9)
         {
             if (tempMonth == 4)
