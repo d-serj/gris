@@ -1,6 +1,4 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
 #include <curses.h>
 
 #define W 119
@@ -12,6 +10,7 @@
 int main()
 {
     int x, y, row, col, c;
+    char a;
 
     initscr();
     noecho();
@@ -20,7 +19,7 @@ int main()
 
     x = y = 0;
 
-    printw ("simple text");
+    printw ("simple text, when read this? please smiling:)");
     move(x, y);
 
     while (1)
@@ -31,20 +30,29 @@ int main()
             move(++y, x);
 
 
-        if (c == W && y > 0)
+        else if (c == W && y > 0)
             move(--y, x);
 
-        if (c == A && x > 0)
+        else if (c == A && x > 0)
             move(y, --x);
 
-        if (c == D && x <= col - 2)
+        else if (c == D && x <= col - 2)
             move(y, ++x);
+
+        if (c == D && c == W)
+            move(--y, --x);
 
         if (c == 32)
         {
-            move(10, 10);
-            //printf ("%d", getconsoletext());
+            a = inch();
+
+            if (a == 's')
+                mvprintw (5, 5, "Success");
+            else
+                mvprintw (5, 5, "ERROR  ");
         }
+        mvprintw(row-2,0,"Row: %d| Colum: %d\n",x,y);
+        move(y, x);
     }
 
     getch();
