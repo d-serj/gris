@@ -68,26 +68,3 @@ int main()
 
     return 0;
 }
-
-
-        if (c == D && c == W)
-            move(--y, --x);
-
-        if (c == 32)
-        {
-            a = inch();
-
-            if (a == 's')
-                mvprintw (5, 5, "Success");
-            else
-                mvprintw (5, 5, "ERROR  ");
-        }
-        mvprintw(row-2,0,"Row: %d| Colum: %d\n",x,y);
-        move(y, x);
-    }
-
-    getch();
-    endwin();
-
-    return 0;
-}
