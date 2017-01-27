@@ -5,6 +5,7 @@
 #define KEY_S 115
 
 void init(void);
+void racket(int, int);
 
 struct coordinates
 {
@@ -23,57 +24,26 @@ int main()
     int direction_y = 1;            // Скорость изменения направления по Y
     int score1      = 0;            // Счет игрока 1
     int score2      = 0;            // Счет игрока 2
-    int c;                          // Переменная хранения ввода с клавиатуры
-    int i;
 
     init();
     getmaxyx(stdscr, max_y, max_x); // Получаем максимальные величины X и Y
 
-    ball.y          = 0;
-    ball.x          = max_x / 2;
-    racket_1.y      = 0;
-    racket_1.x      = 0;
-    racket_2.y      = 0;
-    racket_2.x      = max_x - 1;
+    ball.y     = 0;
+    ball.x     = max_x / 2;
+    racket_1.y = 0;
+    racket_1.x = 0;
+    racket_2.y = 0;
+    racket_2.x = max_x - 1;
 
-    while(1)
+    for (;;)
     {
         clear();
         mvprintw(0, 20, "%2d", score1);
         mvprintw(0, 45, "%2d", score2);
 
-        // Рисуем ракетки
-        for (i = 0; i <= 4; ++i)
-        {
-            mvaddch(racket_1.y + i, racket_1.x, ACS_BLOCK);
-            mvaddch(racket_2.y + i, racket_2.x, ACS_BLOCK);
-        }
+        mvaddch(ball.y, ball.x, ACS_BULLET);
 
-        mvprintw(ball.y, ball.x, "o");
-
-        // Управляем ракеткой
-        switch(c = getch())
-        {
-        case KEY_UP:
-            if (racket_2.y > 0)
-                racket_2.y -= 2;
-            break;
-        case KEY_W:
-            if (racket_1.y > 0)
-                racket_1.y -= 2;
-            break;
-        case KEY_DOWN:
-            if (racket_2.y <= max_y - 6)
-                racket_2.y += 2;
-            break;
-
-        case KEY_S:
-            if (racket_1.y <= max_y - 6)
-                racket_1.y += 2;
-            break;
-        default:
-            break;
-        }
+        racket(max_x, max_y);
 
         refresh();
         Sleep(80);
@@ -131,3 +101,39 @@ void init(void)
     system("pause");
 }
 
+void racket(int screenMax_x, int screenMax_y)
+{
+    int i;
+    int c;  // Переменная хранения ввода с клавиатуры
+
+    // Рисуем ракетки
+    for (i = 0; i <= 4; ++i)
+    {
+        mvaddch(racket_1.y + i, racket_1.x, ACS_BLOCK);
+        mvaddch(racket_2.y + i, racket_2.x, ACS_BLOCK);
+    }
+
+    // Управляем ракеткой
+    switch(c = getch())
+    {
+
+    case KEY_UP:
+        if (racket_2.y > 0)
+            racket_2.y -= 2;
+        break;
+
+    case KEY_W:
+        if (racket_1.y > 0)
+            racket_1.y -= 2;
+        break;
+
+    case KEY_DOWN:
+        if (racket_2.y <= screenMax_y - 6)
+            racket_2.y += 2;
+        break;
+
+    case KEY_S:
+        if (racket_1.y <= screenMax_y - 6)
+            racket_1.y += 2;
+    }
+}
