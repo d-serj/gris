@@ -47,7 +47,6 @@ int main(void)
                         printf("%s\n", word4);
                         break;
                 }
-
                 printf("\n");
             }
             else
