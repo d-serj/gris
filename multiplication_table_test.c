@@ -5,25 +5,28 @@
 
 int main(void)
 {
-    int a, b, multip, randWord;
+    int a, b, multip, randWord, counter, max, incorrectAnswer;
     char word1[] = "Very good!";
     char word2[] = "Nice!";
     char word3[] = "Awesome!";
     char word4[] = "Excellent!";
 
     srand(time(NULL));
+    counter = 0;
+    incorrectAnswer = 0;
+    max = 10;
 
-    while (true)
+    while (counter != max)
     {
-        a = 1 + (rand() % 9);
-        b = 1 + (rand() % 9);
+        a = 1 + rand() % 9;
+        b = 1 + rand() % 9;
         printf("How much is %d * %d ?\n", a, b);
 
         // Пока введенное пользователем число не будет равно правильному результату
         while (a * b != multip)
         {
             scanf("%d", &multip);
-            randWord = (rand() % 4);
+            randWord = rand() % 4;
 
             // Если правильный ответ рандомно выводим
             //1 из 4 поздравительных фраз
@@ -51,10 +54,15 @@ int main(void)
             {
                 printf("Wrong\n");
                 printf("Try one more time\n");
+                ++incorrectAnswer;
             }
         }
+        // Обнуляем во избежание ошибки работы программы
+        // при рандоме одинаковых по результату выражений
         multip = 0;
+        ++counter;
     }
+    printf("Your mistakes are %d", incorrectAnswer);
 
     return 0;
 }
